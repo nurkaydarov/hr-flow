@@ -15,7 +15,7 @@ const Index = ({employees}) => {
     const deleteEmployee = (id) => {
         setEmployeeId(id);
     }
-    console.log(employeeID)
+    console.log(employees)
     return (
 
         <>

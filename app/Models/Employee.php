@@ -47,7 +47,7 @@ class Employee extends Model
                 $filename = uniqid() . '-' .$uploadedFile->getClientOriginalName();
                 $date = date('Y-m-d');
 
-                $path = $request->file('avatar')->storeAs($folder . $date . '/' . $folder, $filename);
+                $path = $request->file('avatar')->storeAs($folder . $date, $filename);
 
                 return $path;
             }

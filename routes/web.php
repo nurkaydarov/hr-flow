@@ -18,9 +18,7 @@ use Inertia\Inertia;
 */
 
 Route::prefix('hr')->group(function (){
-    Route::get('', function (){
-        return Inertia::render('Main');
-    })->name('home');
+    Route::get('', [\App\Http\Controllers\MainController::class, 'index'])->name('home');
     Route::resource('departments', DepartmentController::class);
     Route::resource('employees', EmployeeController::class);
     Route::resource('positions', PositionController::class);

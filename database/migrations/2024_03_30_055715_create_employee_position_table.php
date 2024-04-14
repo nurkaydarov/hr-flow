@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('employee_id')->constrained('employees', 'id')->cascadeOnDelete()->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('position_id')->constrained('positions', 'id')->cascadeOnDelete()->cascadeOnUpdate()->nullOnDelete();
             $table->date('employed_date')->nullable();
-            $table->float('salary rate')->nullable();
+            $table->float('salary_rate')->nullable();
             $table->timestamps();
         });
     }

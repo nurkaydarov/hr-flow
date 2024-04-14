@@ -38,6 +38,9 @@ const Profile = ({employee, avatar_url}) => {
                             <p class="font-medium text-gray-600">Positions</p>
                             <p class="font-medium">
                                 {
+                                    employee.positions && employee.positions.map(position => {
+                                        return position.name + ';'
+                                    })
                                     /*
                                 @if(employee.positions.count())
                                 @foreach(employee.positions as position)
