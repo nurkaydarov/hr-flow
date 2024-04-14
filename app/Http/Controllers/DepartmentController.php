@@ -13,9 +13,12 @@ class DepartmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Department::all();
+        $search = $request->search;
+        $data = Department::query()->when($search, function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        })->get();
         return Inertia::render('Department/Index', ['departments' => $data]);
     }
 

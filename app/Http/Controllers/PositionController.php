@@ -14,9 +14,12 @@ class PositionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $positions = Position::all();
+        $search = $request->search;
+        $positions = Position::query()->when($search, function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        })->get();
         return Inertia::render('Positions/Index', ['positions' => $positions]);
     }
 

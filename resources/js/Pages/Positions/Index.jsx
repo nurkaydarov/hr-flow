@@ -1,4 +1,4 @@
-import {Link, usePage} from "@inertiajs/react";
+import {Link, router, usePage} from "@inertiajs/react";
 import Button from "@/Components/Button.jsx";
 import {useEffect, useState} from "react";
 import FormModal from "@/Components/Position/FormModal.jsx";
@@ -6,6 +6,9 @@ import FormModalEdit from "@/Components/FormModalEdit.jsx";
 import ModalDelete from "@/Components/ModalDelete.jsx";
 
 const Index = ({positions}) => {
+    //search state
+    const [query, setQuery] = useState('');
+
     const [open, setOpen] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
@@ -15,9 +18,9 @@ const Index = ({positions}) => {
     const toggleModal = () => {
         setOpen(!open);
     }
-    useEffect(() => {
-        console.log('flash',flash.success)
-    })
+    useEffect(()=> {
+        router.get(route(route().current()), {search: query}, {preserveState: true, replace: true})
+    }, [query])
     const toggleModalEdit = (position) => {
         setPosition(position)
         setOpenEdit(!openEdit);
@@ -102,7 +105,7 @@ const Index = ({positions}) => {
                             <form className="sm:pr-3" action="#" method="GET">
                                 <label htmlFor="products-search" className="sr-only">Search</label>
                                 <div className="relative w-48 mt-1 sm:w-64 xl:w-96">
-                                    <input type="text" name="email" id="products-search"
+                                    <input type="text" name="email" id="products-search" value={query} onChange={e => setQuery(e.target.value)}
                                            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                            placeholder="Search for products"/>
                                 </div>
@@ -231,10 +234,7 @@ const Index = ({positions}) => {
                                             </td>
 
                                             <td className="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                                Start developing with an open-source library of over 450+ UI components,
-                                                sections, and
-                                                pages built with the utility classes from Tailwind CSS and designed in
-                                                Figma.
+                                                {position.description}
                                             </td>
 
                                             <td className="p-4 space-x-2 whitespace-nowrap">

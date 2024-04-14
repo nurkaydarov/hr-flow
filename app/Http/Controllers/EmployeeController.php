@@ -18,9 +18,12 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::with('department')->get()->map(function ($employee){
+        $search = $request->search;
+        $employees = Employee::with('department')->when($search, function ($query) use ($search){
+            $query->where('firstname',  'LIKE', "%{$search}%");
+        })->get()->map(function ($employee){
             return array_merge($employee->toArray(), ['avatar_url' => $employee->getImage()]);
         });
 

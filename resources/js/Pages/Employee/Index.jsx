@@ -1,14 +1,39 @@
 import TableEmployee from "@/Components/TableEmployee.jsx";
-import {Link, usePage} from "@inertiajs/react";
+import {Link, usePage, router} from "@inertiajs/react";
 import Button from "@/Components/Button.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ModalDelete from "@/Components/ModalDelete.jsx";
 import Dialog from "@/Components/Dialog1.jsx";
 
+
 const Index = ({employees}) => {
+
+    // search
+    const [query, setQuery] = useState('');
+
+
     const {flash} = usePage().props;
     const [open, setOpen] = useState(false);
     const [employeeID, setEmployeeId] = useState(null);
+
+   /* useEffect(() => {
+        fetchEmployees();
+    }, [employees])
+    useEffect(() => {
+        fetchEmployees()
+    }, [query])
+    */
+    useEffect(() => {
+        router.get(route(route().current()), {search: query}, {preserveState: true, replace: true})
+    }, [query])
+
+
+
+
+    const handleSearch = (event) => {
+
+
+    }
     const toggleModal = () => {
         setOpen(!open);
     }
@@ -89,9 +114,10 @@ const Index = ({employees}) => {
                             <form className="sm:pr-3" action="#" method="GET">
                                 <label htmlFor="products-search" className="sr-only">Search</label>
                                 <div className="relative w-48 mt-1 sm:w-64 xl:w-96">
-                                    <input type="text" name="email" id="products-search"
+                                    <input type="text" name="search"  onChange={e => {setQuery(e.target.value)}} id="products-search"
+                                           value={query}
                                            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                           placeholder="Search for products"/>
+                                           placeholder="Search for employees"/>
                                 </div>
                             </form>
                             <div className="flex items-center w-full sm:justify-end">
